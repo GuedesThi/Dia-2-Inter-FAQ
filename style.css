@@ -19,10 +19,6 @@ section {
   width: 60%;
 }
 
-.questionContainer {
-  background-color: rgb(99, 170, 233);
-}
-
 .questionClosed {
   display: flex;
   justify-content: space-between;
@@ -55,4 +51,39 @@ li {
 
 .hidden {
   display: none;
+}
+
+@media (max-width: 860px) {
+  body {
+    background-color: rgb(245, 238, 238);
+  }
+
+  section {
+    width: 90%;
+  }
+
+  .questionClosed {
+    gap: 0;
+    padding: 0.6rem;
+  }
+
+  .questionClosed > h1 {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  .openAnswer,
+  .closeAnswer {
+    font-size: 1rem;
+  }
+
+  .questionOpened {
+    background-color: white;
+    padding: 0 0.6rem 2rem 0.6rem;
+  }
+
+  .questionOpened > p,
+  li {
+    font-size: 0.8rem;
+  }
 }

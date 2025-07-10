@@ -1,28 +1,42 @@
-// .questionContainer (espaço com espaço de perguntas, e espaço de respostas)
-// .questionClosed (espaço com pergunta, e botão de abrir resposta ou fechar resposta)
-// .questionOpened (espaço com resposta)
-// .openAnswer (botão de abrir resposta)
-// .closeAnswer (botão de fechar resposta)
-// .hidden (classe que some o espaço com resposta)
+// .questionContainer = conjunto de div de perguntas + div de respostas)
+// .questionClosed = div de perguntas + botões
+// .questionOpened = div de respostas
+// .openAnswer = botão de abrir
+// .closeAnswer = botão de fechar
+// .hidden = classe que some div de respostas
 
-// Pega todas as perguntas ao invés de sempre a 1º (querySelector), e vê qual delas (forEach) causou o evento "click";
+// pega todas as perguntas ao invés da 1º (querySelector);
 const allQuestions = document.querySelectorAll(".questionClosed");
 
-// "questionSpace" é cada pergunta, e o addEventListener vai pegar especificamente a que teve causou o "click";
+// faz um loop por todas as perguntas, 'questionSpace' é cada uma;
 allQuestions.forEach((questionSpace) => {
+  // vê se houve um 'click' nas perguntas (e não em qual)
   questionSpace.addEventListener("click", () => {
-    /* mesmo sabendo qual pergunta causou o evento, não sabemos pra qual resposta devemos ir, por isso,
-    devemos pegar exatamente o container (pergunta + reposta) da pergunta, e a partir dele chegar a resposta.
-    Para saber qual o container, devemos subir um nível da hierarquia do HTML, pra isso, usamos o "closest"
-    */
-    const container = questionSpace.closest(".questionContainer");
+    // 2º loop que vê qual pergunta gerou o 'click';
+    allQuestions.forEach(function (otherQuestionSpace) {
+      // esconde a resposta caso essa não seja a pergunta feita;
+      if (otherQuestionSpace !== questionSpace) {
+        const otherContainer = otherQuestionSpace.closest(".questionContainer");
 
-    // pega os objetos do container específico da pergunta feita;
+        const otherBtnOpenAnswer = otherContainer.querySelector(".openAnswer");
+        const otherBtnCloseAnswer =
+          otherContainer.querySelector(".closeAnswer");
+        const otherAnswerSpace =
+          otherContainer.querySelector(".questionOpened");
+
+        otherAnswerSpace.classList.add("hidden");
+        otherBtnOpenAnswer.classList.remove("hidden");
+        otherBtnCloseAnswer.classList.add("hidden");
+      }
+    });
+
+    // mostra a resposta caso seja a pergunta feita;
+
+    const container = questionSpace.closest(".questionContainer");
     const btnOpenAnswer = container.querySelector(".openAnswer");
     const btnCloseAnswer = container.querySelector(".closeAnswer");
     const answerSpace = container.querySelector(".questionOpened");
 
-    // "toggle" faz o contrário do que tem, ou seja, se tiver um "hidden" ele tira, senão ele coloca;
     answerSpace.classList.toggle("hidden");
     btnOpenAnswer.classList.toggle("hidden");
     btnCloseAnswer.classList.toggle("hidden");
